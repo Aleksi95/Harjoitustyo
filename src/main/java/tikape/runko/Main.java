@@ -10,14 +10,18 @@ import tikape.runko.database.OpiskelijaDao;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
         Database data = new Database("jdbc:sqlite:opiskelijat.db");
+=======
+        Database database = new Database("jdbc:sqlite:metsapalsta3.db");
+>>>>>>> origin/master
         database.init();
 
         OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("viesti", "tervehdys");
+            map.put("viesti", "mussukka");
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
