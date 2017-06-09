@@ -6,12 +6,11 @@ import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.KayttajaDao;
-import tikape.runko.database.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta13.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta15.db");
         database.init();
 
         KayttajaDao kayttajaDao = new KayttajaDao(database);

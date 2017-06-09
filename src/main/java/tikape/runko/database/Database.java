@@ -41,7 +41,7 @@ public class Database {
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
         lista.add("CREATE TABLE Alue (nimi VARCHAR(20)  PRIMARY KEY);");
         
-        lista.add("CREATE TABLE Kayttaja (kayttaja_id INTEGER PRIMARY KEY,nimi varchar(15));");
+        lista.add("CREATE TABLE Kayttaja (kayttaja_id INTEGER PRIMARY KEY, nimi varchar(15));");
         
         lista.add("CREATE TABLE Keskustelun_avaus (keskust_avaus_id INTEGER PRIMARY KEY, "
                 + "kayttaja INTEGER ,avaus VARCHAR(200),timestamp TIMESTAMP,alue varchar(20) NOT NULL, "
@@ -57,10 +57,10 @@ public class Database {
         
         //Lisätään käyttäjiä:
         
-        lista.add("INSERT INTO Kayttaja(nimi, kayttaja_id) VALUES('Jonne', 1)");
-        lista.add("INSERT INTO Kayttaja(nimi, kayttaja_id) VALUES('Joni', 2)");
-        lista.add("INSERT INTO Kayttaja(nimi, kayttaja_id) VALUES('Jonna', 3)");
-        lista.add("INSERT INTO Kayttaja(nimi, kayttaja_id)  VALUES('Anni', 4)");
+        lista.add("INSERT INTO Kayttaja(kayttaja_id,nimi) VALUES(1, 'Jonne')");
+        lista.add("INSERT INTO Kayttaja(kayttaja_id,nimi) VALUES(2, 'Joni')");
+        lista.add("INSERT INTO Kayttaja(kayttaja_id,nimi) VALUES(3, 'Jonna')");
+        lista.add("INSERT INTO Kayttaja (kayttaja_id,nimi) VALUES(4, 'Anni')");
         
         //Lisätään Alueita
         lista.add("INSERT INTO Alue(nimi) VALUES('sekalainen')");
