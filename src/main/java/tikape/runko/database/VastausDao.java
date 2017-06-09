@@ -11,25 +11,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import tikape.runko.domain.Keskustelun_avaus;
-import tikape.runko.domain.Alue;
+import tikape.runko.domain.Vastaus;
 
 /**
  *
  * @author alekk
  */
-public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
+public class VastausDao implements Dao<Vastaus, Integer> {
 
     private Database database;
 
-    public AvausDao(Database database) {
+    public VastausDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Keskustelun_avaus findOne(Integer key) throws SQLException {
+    public Vastaus findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelun_avaus WHERE keskust_avaus_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE vastaus_id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -38,43 +37,45 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
             return null;
         }
 
-        int id = rs.getInt("keskust_avaus_id");
-        String alue = rs.getString("alue");
+        int id = rs.getInt("vastaus_id");
         int kayttaja = rs.getInt("kayttaja");
-        String keskust_avaus = rs.getString("keskust_avaus");
+        String alue = rs.getString("alue");
+        String vastaus = rs.getString("vastaus");
         String timestamp = rs.getString("timestamp");
+        int avaus = rs.getInt("keskust_avaus");
 
-        Keskustelun_avaus ka = new Keskustelun_avaus(id, alue, kayttaja, keskust_avaus, timestamp);
+        Vastaus v = new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus);
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return ka;
+        return v;
     }
 
     @Override
-    public List<Keskustelun_avaus> findAll() throws SQLException {
+    public List<Vastaus> findAll() throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelun_avaus");
 
         ResultSet rs = stmt.executeQuery();
-        List<Keskustelun_avaus> avaukset = new ArrayList<>();
+        List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("keskust_avaus_id");
-            String alue = rs.getString("alue");
+            int id = rs.getInt("vastaus_id");
             int kayttaja = rs.getInt("kayttaja");
-            String keskust_avaus = rs.getString("keskust_avaus");
+            String alue = rs.getString("alue");
+            String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
+            int avaus = rs.getInt("keskust_avaus");
 
-            avaukset.add(new Keskustelun_avaus(id, alue, kayttaja, keskust_avaus, timestamp));
+            vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return avaukset;
+        return vastaukset;
     }
     
     @Override
@@ -82,27 +83,28 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public List<Keskustelun_avaus> findLatest10() throws SQLException {
+    public List<Vastaus> findAllInThread() throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS Avaus, COUNT(v.vastaus_id) AS viesteja, MAX(v.timestamp) AS Viimeisin FROM Keskustelun_avaus ka LEFT JOIN Vastaus v ON  ka.keskust_avaus_id = v.keskust_avaus WHERE ka.alue = ? GROUP BY keskust_avaus_id ORDER BY ka.timestamp DESC LIMIT 10");
+        PreparedStatement stmt = connection.prepareStatement("SELECT Vastaus.vastaus, kayttaja.nimi FROM Vastaus LEFT JOIN Keskustelun_avaus, kayttaja ON vastaus.keskust_avaus = keskustelun_avaus.keskust_avaus_id AND vastaus.kayttaja = kayttaja.kayttaja_id WHERE keskustelun_avaus.keskust_avaus_id = ? ORDER BY vastaus.timestamp");
 
         ResultSet rs = stmt.executeQuery();
-        List<Keskustelun_avaus> avaukset = new ArrayList<>();
+        List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("keskust_avaus_id");
-            String alue = rs.getString("alue");
+            int id = rs.getInt("vastaus_id");
             int kayttaja = rs.getInt("kayttaja");
-            String keskust_avaus = rs.getString("keskust_avaus");
+            String alue = rs.getString("alue");
+            String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
+            int avaus = rs.getInt("keskust_avaus");
 
-            avaukset.add(new Keskustelun_avaus(id, alue, kayttaja, keskust_avaus, timestamp));
+            vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return avaukset;
+        return vastaukset;
     }
 
 }
