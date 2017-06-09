@@ -54,7 +54,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<Kayttaja> kayttajat = new ArrayList<>();
         while (rs.next()) {
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("kayttaja_id");
             String nimi = rs.getString("nimi");
 
             kayttajat.add(new Kayttaja(id, nimi));

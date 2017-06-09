@@ -31,7 +31,7 @@ public class Main {
 
         get("/opiskelijat/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("kayttaja", kayttajaDao.findOne(Integer.parseInt(req.params("id"))));
+            map.put("kayttaja", kayttajaDao.findOne(Integer.parseInt(req.params("kayttaja_id"))));
 
             return new ModelAndView(map, "kayttaja");
         }, new ThymeleafTemplateEngine());
