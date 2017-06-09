@@ -24,7 +24,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
     @Override
     public Kayttaja findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE kayttaja_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Kayttaja WHERE id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -33,7 +33,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
             return null;
         }
 
-        Integer id = rs.getInt("kayttaja_id");
+        Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
         Kayttaja k = new Kayttaja(id, nimi);
@@ -54,7 +54,7 @@ public class KayttajaDao implements Dao<Kayttaja, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<Kayttaja> kayttajat = new ArrayList<>();
         while (rs.next()) {
-            Integer id = rs.getInt("kayttaja_id");
+            Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
 
             kayttajat.add(new Kayttaja(id, nimi));
