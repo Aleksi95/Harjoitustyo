@@ -1,44 +1,39 @@
 package tikape.runko;
 
 import java.util.HashMap;
-import java.util.*;
 import spark.ModelAndView;
 import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import tikape.runko.database.Database;
 import tikape.runko.database.KayttajaDao;
-import tikape.runko.database.AlueDao;
-
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        Database database = new Database("jdbc:sqlite:metsapalsta3.db");
-      
+        Database database = new Database("jdbc:sqlite:metsapalasta15.db");
         database.init();
-       
-        AlueDao alueDao = new AlueDao(database);
+
+        KayttajaDao kayttajaDao = new KayttajaDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("alueet", alueDao.findAll());
+            map.put("viesti", "tervehdys");
 
-            return new ModelAndView(map, "alueet");
+            return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-       // get("/opiskelijat", (req, res) -> {
-            //HashMap map = new HashMap<>();
-            //map.put("kayttajat", kaDao.findAll());
+        get("/opiskelijat", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("kayttajat", kayttajaDao.findAll());
 
-            //return new ModelAndView(map, "kayttajat");
-        //}, new ThymeleafTemplateEngine());
+            return new ModelAndView(map, "kayttajat");
+        }, new ThymeleafTemplateEngine());
 
-        //get("/kayttajat/:id", (req, res) -> {
-           // HashMap map = new HashMap<>();
-           // map.put("opiskelija", kayttajaDao.findOne(Integer.parseInt(req.params("id"))));
+        get("/opiskelijat/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("kayttaja", kayttajaDao.findOne(Integer.parseInt(req.params("id"))));
 
-           // return new ModelAndView(map, "kayttaja");
-        //}, new ThymeleafTemplateEngine());
+            return new ModelAndView(map, "kayttaja");
+        }, new ThymeleafTemplateEngine());
     }
 }
