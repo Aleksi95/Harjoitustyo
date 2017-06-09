@@ -7,11 +7,10 @@
     </head>
 
     <body>
-        <h1>Metsapalsta</h1>
-            <ol>
-            <li th:each="alue: ${alueet}">
-                <span th:text="${alue.nimi}">alueen nimi</span> 
-            </li>
-        </ol>
+        <h1>Heippa vaan!</h1>
+
+        <p>Ja .. <span th:text="${viesti}">jotain?</span></p>
+
+        <p><a href="/opiskelijat">Tästä opiskelijalistaukseen.</a></p>
     </body>
 </html>
