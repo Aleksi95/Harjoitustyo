@@ -12,7 +12,7 @@ public class AlueDao implements Dao<Alue, String>{
     
     private Database database;
     
-    public AlueDao(Database datbase){
+    public AlueDao(Database database){
         this.database = database;
     }
 
