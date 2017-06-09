@@ -2,17 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>Metsäpalsta</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
         <h1>Alue</h1>
-
         <ol>
             <li th:each="alue: ${alueet}">
-                <span th:text="${alue.nimi}">kayttajan nimi</span> <a th:href="${'/opiskelijat/' + alue.nimi}">linkki</a>
+                <a th:href="${'/' + alue.nimi}"><span th:text="${alue.nimi}">alue</span> </a>
             </li>
         </ol>
+        
+        
     </body>
 </html>
