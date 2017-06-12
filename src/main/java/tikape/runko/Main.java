@@ -10,7 +10,7 @@ import tikape.runko.database.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta15.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta22.db");
         database.init();
 
         KayttajaDao kayttajaDao = new KayttajaDao(database);

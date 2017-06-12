@@ -43,15 +43,28 @@ public class AlueDao implements Dao<Alue, String>{
     @Override
     public List<Alue> findAll() throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue");
+        PreparedStatement stmt = connection.prepareStatement("SELECT alue.nimi as alue, "
+                + "Count(vastaus.vastaus_id) + Count(Distinct keskustelun_avaus.keskust_avaus_id) AS viesteja,"
+                + "CASE WHEN keskUstelun_avaus.timestamp < vastaus.timestamp THEN vastaus.timestamp"
+                + "ELSE keskustelun_avaus.timestamp END AS viimeisin" // ei toimi
+                + "FROM Alue LEFT JOIN Keskustelun_avaus ON alue.nimi = Keskustelun_avaus.alue LEFT JOIN Vastaus ON  "
+                + "keskustelun_avaus.keskust_avaus_id = vastaus.keskust_avaus GROUP BY alue.nimi");
 
         ResultSet rs = stmt.executeQuery();
         List<Alue> alueet = new ArrayList<>();
         while (rs.next()) {
            
-            String nimi = rs.getString("nimi");
+            String nimi = rs.getString("alue");
+            Alue alue = new Alue(nimi);
+            
+            if(rs.getInt("viesteja") == 0){
+                
+            }else{
+                alue.setViesteja(rs.getInt("viesteja"));
+                
+            }
 
-            alueet.add(new Alue(nimi));
+            alueet.add(alue);
         }
 
         rs.close();

@@ -10,7 +10,7 @@
         <h1>Alue</h1>
         <ol>
             <li th:each="alue: ${alueet}">
-                <a th:href="${'/' + alue.nimi}"><span th:text="${alue.nimi}">alue</span> </a>
+                <a th:href="${'/' + alue.nimi}"><span th:text="${alue.toString()}">alue</span> </a>
             </li>
         </ol>
         
