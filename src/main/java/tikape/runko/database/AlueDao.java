@@ -45,8 +45,7 @@ public class AlueDao implements Dao<Alue, String>{
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT alue.nimi as alue, "
                 + "Count(vastaus.vastaus_id) + Count(Distinct keskustelun_avaus.keskust_avaus_id) AS viesteja,"
-                + "CASE WHEN keskUstelun_avaus.timestamp < vastaus.timestamp THEN vastaus.timestamp"
-                + "ELSE keskustelun_avaus.timestamp END AS viimeisin" // ei toimi
+                + "MAX(keskustelun_avaus.timestamp, vastaus.timestamp ) AS viimeisin " // EI TOMI!
                 + "FROM Alue LEFT JOIN Keskustelun_avaus ON alue.nimi = Keskustelun_avaus.alue LEFT JOIN Vastaus ON  "
                 + "keskustelun_avaus.keskust_avaus_id = vastaus.keskust_avaus GROUP BY alue.nimi");
 
@@ -61,7 +60,7 @@ public class AlueDao implements Dao<Alue, String>{
                 
             }else{
                 alue.setViesteja(rs.getInt("viesteja"));
-                
+                alue.setTimestamp(rs.getString("viimeisin"));
             }
 
             alueet.add(alue);
