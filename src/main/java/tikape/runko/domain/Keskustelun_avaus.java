@@ -17,7 +17,7 @@ public class Keskustelun_avaus {
         this.timestamp = timestamp; 
     }
     
-    public String getKeskustelun_avaus(){
+    public String getAvaus(){
         return this.keskust_avaus;
     }
 }
