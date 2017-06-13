@@ -10,8 +10,8 @@
         <h1>Hei opiskelijat!</h1>
 
         <ol>
-            <li th:each="kayttaja: ${kayttajat}">
-                <span th:text="${kayttaja.nimi}">kayttajan nimi</span> <a th:href="${'/opiskelijat/' + kayttaja.nimi}">linkki</a>
+            <li th:each="avaus: ${avaukset}">
+                <span th:text="${avaus.avaus}">keskustelun avaus</span> <a th:href="${'/avaus.alue/:id'}">linkki</a>
             </li>
         </ol>
     </body>

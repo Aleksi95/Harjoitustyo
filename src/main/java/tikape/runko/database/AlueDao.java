@@ -45,7 +45,7 @@ public class AlueDao implements Dao<Alue, String>{
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT alue.nimi as alue, "
                 + "Count(vastaus.vastaus_id) + Count(Distinct keskustelun_avaus.keskust_avaus_id) AS viesteja,"
-                + "MAX(keskustelun_avaus.timestamp, vastaus.timestamp ) AS viimeisin " // EI TOMI!
+                + "MAX(vastaus.timestamp ) AS viimeisin " // Keskustelun avauksia ei huomioida
                 + "FROM Alue LEFT JOIN Keskustelun_avaus ON alue.nimi = Keskustelun_avaus.alue LEFT JOIN Vastaus ON  "
                 + "keskustelun_avaus.keskust_avaus_id = vastaus.keskust_avaus GROUP BY alue.nimi");
 

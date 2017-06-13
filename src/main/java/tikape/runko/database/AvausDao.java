@@ -64,7 +64,7 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
             int id = rs.getInt("keskust_avaus_id");
             String alue = rs.getString("alue");
             int kayttaja = rs.getInt("kayttaja");
-            String keskust_avaus = rs.getString("keskust_avaus");
+            String keskust_avaus = rs.getString("avaus");
             String timestamp = rs.getString("timestamp");
 
             avaukset.add(new Keskustelun_avaus(id, alue, kayttaja, keskust_avaus, timestamp));
