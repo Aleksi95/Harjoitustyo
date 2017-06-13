@@ -18,10 +18,14 @@ public class Keskustelun_avaus {
     }
     
     public String getAvaus(){
-        return this.keskust_avaus;
+        return " " + this.keskust_avaus;
     }
     
     public Integer getId(){
         return this.id;
+    }
+    
+    public String getTimestamp(){
+        return this.timestamp;
     }
 }

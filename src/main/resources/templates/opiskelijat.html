@@ -11,7 +11,7 @@
 
         <ol>
             <li th:each="avaus: ${avaukset}">
-                <span th:text="${avaus.getAvaus()}">keskustelun avaus</span> <a th:href="${'/' + avaus.getId()}">linkki</a>
+                <span th:text="${avaus.getAvaus() + avaus.getTimestamp()}">keskustelun avaus</span> <a th:href="${'/' + avaus.getId()}">linkki</a>
             </li>
         </ol>
     </body>
