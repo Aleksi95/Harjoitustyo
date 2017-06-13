@@ -42,7 +42,7 @@ public class Main {
 
         get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("vastaukset", vastausDao.findAllInThread(Integer.parseInt(req.params("keskust_avaus_id"))));
+            map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus_id")));
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
