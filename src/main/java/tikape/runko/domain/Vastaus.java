@@ -11,7 +11,7 @@ public class Vastaus {
     private String timestamp;
     // timestamp
     
-    public Vastaus (Integer id, Integer kayttaja, String alue, String Vastaus, String timestamp, int avaus_id){
+    public Vastaus (Integer id, Integer kayttaja, String alue, String vastaus, String timestamp, int avaus_id){
         this.id = id;
         this.kayttaja_id = kayttaja;
         this.alue = alue;
