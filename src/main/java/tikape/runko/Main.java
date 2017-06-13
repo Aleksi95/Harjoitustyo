@@ -28,7 +28,7 @@ public class Main {
             HashMap map = new HashMap<>();
             map.put("avaukset", avausDao.findAll());
 
-            return new ModelAndView(map, "avaukset");
+            return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
 
         get("/opiskelijat/:id", (req, res) -> {
