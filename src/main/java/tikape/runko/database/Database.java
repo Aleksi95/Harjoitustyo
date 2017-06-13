@@ -34,6 +34,7 @@ public class Database {
             System.out.println("Error >> " + t.getMessage());
         }
     }
+    
 
     private List<String> sqliteLauseet() {
         ArrayList<String> lista = new ArrayList<>();
