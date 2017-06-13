@@ -26,12 +26,12 @@ public class Main {
 
         get("/:alue", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("avaukset", avausDao.findAll());
+            map.put("avaukset", avausDao.findLatest10(req.params("alue")));
 
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
 
-        get("/opiskelijat/:id", (req, res) -> {
+        get("/:alue/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("kayttaja", kayttajaDao.findOne(Integer.parseInt(req.params("id"))));
 

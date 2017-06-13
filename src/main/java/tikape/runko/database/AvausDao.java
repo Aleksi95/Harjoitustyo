@@ -82,9 +82,15 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public List<Keskustelun_avaus> findLatest10() throws SQLException {
+    public List<Keskustelun_avaus> findLatest10(String key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS Avaus, COUNT(v.vastaus_id) AS viesteja, MAX(v.timestamp) AS Viimeisin FROM Keskustelun_avaus ka LEFT JOIN Vastaus v ON  ka.keskust_avaus_id = v.keskust_avaus WHERE ka.alue = ? GROUP BY keskust_avaus_id ORDER BY ka.timestamp DESC LIMIT 10");
+        PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS Avaus, ka.alue AS alue,"
+                + "COUNT(v.vastaus_id) AS viesteja, ka.kayttaja AS kayttaja, MAX(v.timestamp) AS timestamp, keskust_avaus_id "
+                + "FROM Keskustelun_avaus ka LEFT JOIN Vastaus v "
+                + "ON  ka.keskust_avaus_id = v.keskust_avaus "
+                + "WHERE ka.alue = ? GROUP BY keskust_avaus_id ORDER BY ka.timestamp DESC LIMIT 10");
+        
+        stmt.setString(1,key);
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelun_avaus> avaukset = new ArrayList<>();
@@ -92,7 +98,7 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
             int id = rs.getInt("keskust_avaus_id");
             String alue = rs.getString("alue");
             int kayttaja = rs.getInt("kayttaja");
-            String keskust_avaus = rs.getString("keskust_avaus");
+            String keskust_avaus = rs.getString("avaus");
             String timestamp = rs.getString("timestamp");
 
             avaukset.add(new Keskustelun_avaus(id, alue, kayttaja, keskust_avaus, timestamp));
