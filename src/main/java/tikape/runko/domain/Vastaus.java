@@ -27,6 +27,10 @@ public class Vastaus {
     public int getKayttaja(){
         return this.kayttaja_id;
     }
+
+    public int getId() {
+        return id;
+    }
     
     
 }

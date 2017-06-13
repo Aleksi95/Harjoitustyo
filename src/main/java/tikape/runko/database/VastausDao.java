@@ -83,10 +83,10 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public List<Vastaus> findAllInThread() throws SQLException {
+    public List<Vastaus> findAllInThread(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT Vastaus.vastaus, kayttaja.nimi FROM Vastaus LEFT JOIN Keskustelun_avaus, kayttaja ON vastaus.keskust_avaus = keskustelun_avaus.keskust_avaus_id AND vastaus.kayttaja = kayttaja.kayttaja_id WHERE keskustelun_avaus.keskust_avaus_id = ? ORDER BY vastaus.timestamp");
-
+        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, k.nimi FROM Vastaus v LEFT JOIN Kayttaja k ON v.kayttaja = k.id WHERE keskust_avaus = ? ORDER BY vastaus.timestamp");
+        stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
@@ -96,7 +96,6 @@ public class VastausDao implements Dao<Vastaus, Integer> {
             String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
             int avaus = rs.getInt("keskust_avaus");
-
             vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 

@@ -16,6 +16,7 @@ public class Main {
         KayttajaDao kayttajaDao = new KayttajaDao(database);
         AlueDao alueDao = new AlueDao(database);
         AvausDao avausDao = new AvausDao(database);
+        VastausDao vastausDao = new VastausDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -31,11 +32,11 @@ public class Main {
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
 
-        get("/:alue/:id", (req, res) -> {
+        get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("kayttaja", kayttajaDao.findOne(Integer.parseInt(req.params("id"))));
+            map.put("vastaukset", vastausDao.findAllInThread(Integer.parseInt(req.params("keskust_avaus_id"))));
 
-            return new ModelAndView(map, "kayttaja");
+            return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
     }
 }
