@@ -40,9 +40,9 @@ public class Main {
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
 
-        get("/:id", (req, res) -> {
+        get("/:alue/:keskust_avaus", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus_id")));
+            map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus")));
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());

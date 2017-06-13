@@ -85,17 +85,17 @@ public class VastausDao implements Dao<Vastaus, Integer> {
     
     public List<Vastaus> findAllInThread(String key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, k.nimi FROM Vastaus v LEFT JOIN Kayttaja k ON v.kayttaja = k.id WHERE keskust_avaus = ? ORDER BY vastaus.timestamp");
+        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, v.vastaus_id, k.nimi as kayttaja, v.alue, v.timestamp, v.keskust_avaus FROM Vastaus v LEFT JOIN Kayttaja k ON v.kayttaja = k.id WHERE v.keskust_avaus = ? ORDER BY v.timestamp");
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("vastaus_id");
-            int kayttaja = rs.getInt("kayttaja");
+            Integer id = rs.getInt("vastaus_id");
+            Integer kayttaja = rs.getInt("kayttaja");
             String alue = rs.getString("alue");
             String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
-            int avaus = rs.getInt("keskust_avaus");
+            Integer avaus = rs.getInt("keskust_avaus");
             vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
