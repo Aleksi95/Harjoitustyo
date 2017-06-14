@@ -7,11 +7,11 @@
     </head>
 
     <body>
-        <h1>kjehkops</h1>
+        <h1> </h1>
 
         <ol>
             <li th:each="vastaus: ${vastaukset}">
-                <span th:text="${vastaus.getVastaus()}">vastaus</span>
+                <span th:text="${vastaus.getVastaus() + ' t: ' + vastaus.getKayttaja()}">vastaus</span>
                 
             </li>
         </ol>

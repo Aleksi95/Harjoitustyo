@@ -34,7 +34,7 @@ public class Alue {
     }
     
     public String toString(){
-       return this.nimi + "     " + this.viesteja + "       " + this.timestamp;
+       return this.nimi + " | " + this.viesteja + " | " + this.timestamp;
     }
     
 }
