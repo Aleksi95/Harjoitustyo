@@ -29,9 +29,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         post("/", (req, res) -> {
-            alueDao.lisaaAlue(req.queryParams("alue"));
+            alueDao.lisaaAlue(req.queryParams("nimi"));
             res.redirect("/");
-            return "ok";
+            return "ok";   
         });
 
         get("/:alue", (req, res) -> {
@@ -44,7 +44,7 @@ public class Main {
         
         post("/:alue", (req, res) -> {
             avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.queryParams("alue"), req.queryParams("avaus"));
-            res.redirect("/:alue");
+            res.redirect("/");
             return "ok";
         });
 

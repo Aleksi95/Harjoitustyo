@@ -14,7 +14,7 @@
                 <span th:text="${avaus.getAvaus() + ' | ' +  + avaus.getTimestamp()}">keskustelun avaus</span> <a th:href="${'/' + avaus.getAlue() + '/' + avaus.getId()}">linkki</a>
             </li>
         </ol>
-        
+       
         <form method="POST">
             <input type="text" name="avaus"/>
             <input type="submit" value="lisää"/>
