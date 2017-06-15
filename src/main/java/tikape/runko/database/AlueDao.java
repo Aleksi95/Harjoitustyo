@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Alue;
@@ -76,6 +77,15 @@ public class AlueDao implements Dao<Alue, String>{
     @Override
     public void delete(String key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void lisaaAlue(String key) throws SQLException{
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue(nimi) VALUES(?)");
+        stmt.setObject(1, key);
+        stmt.close();
+        connection.close();
+        
     }
     
 }

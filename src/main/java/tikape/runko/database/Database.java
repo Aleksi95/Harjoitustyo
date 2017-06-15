@@ -35,6 +35,8 @@ public class Database {
         }
     }
     
+    
+    
 
     private List<String> sqliteLauseet() {
         ArrayList<String> lista = new ArrayList<>();
