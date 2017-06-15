@@ -24,12 +24,11 @@ public class Main {
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("alueet", alueDao.findAll());
-
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
         
         post("/", (req, res) -> {
-            alueDao.lisaaAlue(req.params("nimi"));
+            alueDao.lisaaAlue(req.queryParams("nimi"));
             res.redirect("/");
             return "ok";   
         });

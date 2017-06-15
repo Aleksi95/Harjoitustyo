@@ -82,9 +82,9 @@ public class AlueDao implements Dao<Alue, String>{
     
     public void lisaaAlue(String key) throws SQLException{
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue(nimi) VALUES(?)");
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (nimi) VALUES(?)");
         stmt.setObject(1, key);
-        stmt.close();
+        stmt.execute();
         connection.close();
         
     }
