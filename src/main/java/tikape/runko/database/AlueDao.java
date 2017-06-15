@@ -1,6 +1,7 @@
 
 package tikape.runko.database;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,13 +80,6 @@ public class AlueDao implements Dao<Alue, String>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void lisaaAlue(String key) throws SQLException{
-        Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue(nimi) VALUES(?)");
-        stmt.setObject(1, key);
-        stmt.close();
-        connection.close();
-        
-    }
+    
     
 }
