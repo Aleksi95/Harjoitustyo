@@ -24,10 +24,8 @@ public class Main {
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             if (req.queryParams().contains("content")) {
-                
-                
+                alueDao.lisaaAlue(req.queryParams("content"));
             }
-            
             map.put("alueet", alueDao.findAll());
 
             return new ModelAndView(map, "index");
