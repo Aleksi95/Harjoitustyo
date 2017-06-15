@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <h1>Alue</h1>
+        <h3>Alue| Viestien maara | Viimeisin viesti</h3>
         <ol>
             <li th:each="alue: ${alueet}">
                 <a th:href="${'/' + alue.nimi}"><span th:text="${alue.toString()}">alue</span> </a>

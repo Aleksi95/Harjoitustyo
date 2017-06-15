@@ -28,4 +28,8 @@ public class Keskustelun_avaus {
     public String getTimestamp(){
         return this.timestamp;
     }
+    
+    public String getAlue(){
+        return this.alue;
+    }
 }

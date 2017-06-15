@@ -28,23 +28,24 @@ public class VastausDao implements Dao<Vastaus, Integer> {
     @Override
     public Vastaus findOne(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE vastaus_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, "
+                + "v.vastaus_id, k.nimi as kayttaja, v.alue, v.timestamp, "
+                + "v.keskust_avaus, ka.avaus as avaus "
+                + "FROM Vastaus v LEFT JOIN Keskustelun_avaus ka "
+                + "ON v.keskust_avaus = ka.keskust_avaus_id"
+                + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
+                + "WHERE v.keskust_avaus = ? ORDER BY v.timestamp");
+        
         stmt.setObject(1, key);
-
         ResultSet rs = stmt.executeQuery();
-        boolean hasOne = rs.next();
-        if (!hasOne) {
-            return null;
-        }
-
-        int id = rs.getInt("vastaus_id");
-        int kayttaja = rs.getInt("kayttaja");
-        String alue = rs.getString("alue");
-        String vastaus = rs.getString("vastaus");
-        String timestamp = rs.getString("timestamp");
-        int avaus = rs.getInt("keskust_avaus");
-
-        Vastaus v = new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus);
+            Integer id = rs.getInt("vastaus_id");
+            String kayttaja = rs.getString("kayttaja");
+            String alue = rs.getString("alue");
+            String vastaus = rs.getString("vastaus");
+            String timestamp = rs.getString("timestamp");
+            String avaus = rs.getString("avaus");
+            Vastaus v = new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus);
+  
 
         rs.close();
         stmt.close();
@@ -56,18 +57,23 @@ public class VastausDao implements Dao<Vastaus, Integer> {
     @Override
     public List<Vastaus> findAll() throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Keskustelun_avaus");
-
+        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, "
+                + "v.vastaus_id, k.nimi as kayttaja, v.alue, v.timestamp, "
+                + "v.keskust_avaus, ka.avaus as avaus "
+                + "FROM Vastaus v LEFT JOIN Keskustelun_avaus ka "
+                + "ON v.keskust_avaus = ka.keskust_avaus_id"
+                + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
+                + "ORDER BY v.timestamp");
+        
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("vastaus_id");
-            int kayttaja = rs.getInt("kayttaja");
+            Integer id = rs.getInt("vastaus_id");
+            String kayttaja = rs.getString("kayttaja");
             String alue = rs.getString("alue");
             String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
-            int avaus = rs.getInt("keskust_avaus");
-
+            String avaus = rs.getString("avaus");
             vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
@@ -85,17 +91,24 @@ public class VastausDao implements Dao<Vastaus, Integer> {
     
     public List<Vastaus> findAllInThread(String key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, k.nimi FROM Vastaus v LEFT JOIN Kayttaja k ON v.kayttaja = k.id WHERE keskust_avaus = ? ORDER BY vastaus.timestamp");
+        PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, "
+                + "v.vastaus_id, k.nimi as kayttaja, v.alue, v.timestamp, "
+                + "v.keskust_avaus, ka.avaus as avaus "
+                + "FROM Vastaus v LEFT JOIN Keskustelun_avaus ka "
+                + "ON v.keskust_avaus = ka.keskust_avaus_id "
+                + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
+                + "WHERE v.keskust_avaus = ? ORDER BY v.timestamp");
+        
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            int id = rs.getInt("vastaus_id");
-            int kayttaja = rs.getInt("kayttaja");
+            Integer id = rs.getInt("vastaus_id");
+            String kayttaja = rs.getString("kayttaja");
             String alue = rs.getString("alue");
             String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
-            int avaus = rs.getInt("keskust_avaus");
+            String avaus = rs.getString("avaus");
             vastaukset.add(new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
