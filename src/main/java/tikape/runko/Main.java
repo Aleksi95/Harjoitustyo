@@ -13,7 +13,7 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta40.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta456.db");
         database.init();
 
         KayttajaDao kayttajaDao = new KayttajaDao(database);
@@ -33,6 +33,9 @@ public class Main {
             res.redirect("/");
             return "ok";   
         });
+
+        
+
 
         get("/:alue", (req, res) -> {
             HashMap map = new HashMap<>();
