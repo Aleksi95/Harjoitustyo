@@ -46,7 +46,7 @@ public class Main {
 
         post("/:alue", (req, res) -> {
             avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("avaus"));
-            res.redirect("/");
+            res.redirect("/" + req.params("alue"));
             return "ok";
         });
 
@@ -63,7 +63,7 @@ public class Main {
         
         post("/:alue/:keskust_avaus", (req, res) -> {
             vastausDao.lisaaVastaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("vastaus"), req.params("keskust_avaus"));
-            res.redirect("/");
+            res.redirect("/" + req.params("alue") + "/" + req.params("keskust_avaus"));
             return "ok";     
         });
     }
