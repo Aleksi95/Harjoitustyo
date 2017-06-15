@@ -13,7 +13,7 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta456.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta509.db");
         database.init();
 
         KayttajaDao kayttajaDao = new KayttajaDao(database);
@@ -24,18 +24,17 @@ public class Main {
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("alueet", alueDao.findAll());
-   
+
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
+
         post("/", (req, res) -> {
-            alueDao.lisaaAlue(req.queryParams("nimi"));
+            if (req.queryParams().contains("alue")) {
+                alueDao.lisaaAlue(req.queryParams("alue"));
+            }
             res.redirect("/");
-            return "ok";   
+            return "ok";
         });
-
-        
-
 
         get("/:alue", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -44,7 +43,7 @@ public class Main {
 
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
-        
+
         post("/:alue", (req, res) -> {
             avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("avaus"));
             res.redirect("/");
@@ -58,7 +57,6 @@ public class Main {
 
             map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
             map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus")));
-
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
