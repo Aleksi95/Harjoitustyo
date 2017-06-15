@@ -43,12 +43,12 @@ public class Main {
 
         get("/:alue/:keskust_avaus", (req, res) -> {
             HashMap map = new HashMap<>();
-<<<<<<< HEAD
+
             map.put("vastaukset", vastausDao.findAllInThread(req.params("id")));
-=======
+
             map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
             map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus")));
->>>>>>> 6a83bd609d1e84e35fa1176cf2a214b16051c405
+
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
