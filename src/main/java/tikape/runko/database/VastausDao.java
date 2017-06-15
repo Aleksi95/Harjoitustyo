@@ -35,17 +35,16 @@ public class VastausDao implements Dao<Vastaus, Integer> {
                 + "ON v.keskust_avaus = ka.keskust_avaus_id"
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
                 + "WHERE v.keskust_avaus = ? ORDER BY v.timestamp");
-        
+
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
-            Integer id = rs.getInt("vastaus_id");
-            String kayttaja = rs.getString("kayttaja");
-            String alue = rs.getString("alue");
-            String vastaus = rs.getString("vastaus");
-            String timestamp = rs.getString("timestamp");
-            String avaus = rs.getString("avaus");
-            Vastaus v = new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus);
-  
+        Integer id = rs.getInt("vastaus_id");
+        String kayttaja = rs.getString("kayttaja");
+        String alue = rs.getString("alue");
+        String vastaus = rs.getString("vastaus");
+        String timestamp = rs.getString("timestamp");
+        String avaus = rs.getString("avaus");
+        Vastaus v = new Vastaus(id, kayttaja, alue, vastaus, timestamp, avaus);
 
         rs.close();
         stmt.close();
@@ -64,7 +63,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
                 + "ON v.keskust_avaus = ka.keskust_avaus_id"
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
                 + "ORDER BY v.timestamp");
-        
+
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
@@ -83,12 +82,12 @@ public class VastausDao implements Dao<Vastaus, Integer> {
 
         return vastaukset;
     }
-    
+
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public List<Vastaus> findAllInThread(String key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.vastaus, "
@@ -98,7 +97,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
                 + "ON v.keskust_avaus = ka.keskust_avaus_id "
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
                 + "WHERE v.keskust_avaus = ? ORDER BY v.timestamp");
-        
+
         stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
@@ -117,6 +116,19 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         connection.close();
 
         return vastaukset;
+    }
+
+    public void lisaaVastaus(String kayttaja, String alue, String key, String avaus) throws SQLException {
+        Connection c = database.getConnection();
+        PreparedStatement stmt = c.prepareStatement("INSERT INTO Vastaus (vastaus, kayttaja, keskust_avaus, alue) "
+                + "VALUES (?, ?, ?, ?)");
+        stmt.setString(1, key);
+        stmt.setString(2, kayttaja);
+        stmt.setString(3, avaus);
+        stmt.setString(4, alue);
+        stmt.execute();
+        
+        c.close();
     }
 
 }

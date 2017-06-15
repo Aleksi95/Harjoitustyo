@@ -60,5 +60,11 @@ public class Main {
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
+        
+        post("/:alue/:keskust_avaus", (req, res) -> {
+            vastausDao.lisaaVastaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("vastaus"), req.params("keskust_avaus"));
+            res.redirect("/");
+            return "ok";     
+        });
     }
 }
