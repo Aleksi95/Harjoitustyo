@@ -35,6 +35,7 @@ public class Main {
 
         get("/:alue", (req, res) -> {
             HashMap map = new HashMap<>();
+            map.put("teksti", "Alue: " + req.params("alue"));
             map.put("avaukset", avausDao.findLatest10(req.params("alue")));
 
             return new ModelAndView(map, "opiskelijat");
@@ -42,6 +43,7 @@ public class Main {
 
         get("/:alue/:keskust_avaus", (req, res) -> {
             HashMap map = new HashMap<>();
+            map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
             map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus")));
 
             return new ModelAndView(map, "opiskelija");

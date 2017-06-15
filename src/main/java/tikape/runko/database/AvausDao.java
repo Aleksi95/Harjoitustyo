@@ -84,7 +84,7 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
     
     public List<Keskustelun_avaus> findLatest10(String key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS Avaus, ka.alue AS alue,"
+        PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS avaus, ka.alue AS alue,"
                 + "COUNT(v.vastaus_id) AS viesteja, ka.kayttaja AS kayttaja, MAX(v.timestamp) AS timestamp, keskust_avaus_id "
                 + "FROM Keskustelun_avaus ka LEFT JOIN Vastaus v "
                 + "ON  ka.keskust_avaus_id = v.keskust_avaus "
