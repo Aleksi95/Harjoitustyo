@@ -29,7 +29,7 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         post("/", (req, res) -> {
-            alueDao.lisaaAlue(req.queryParams("nimi"));
+            alueDao.lisaaAlue(req.params("nimi"));
             res.redirect("/");
             return "ok";   
         });
@@ -46,7 +46,7 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         post("/:alue", (req, res) -> {
-            avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.queryParams("alue"), req.queryParams("avaus"));
+            avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("avaus"));
             res.redirect("/");
             return "ok";
         });

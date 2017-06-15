@@ -114,10 +114,10 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
     public void lisaaAvaus(String kayttaja, String alue, String key) throws SQLException {
         Connection c = database.getConnection();
         PreparedStatement stmt = c.prepareStatement("INSERT INTO Keskustelun_avaus (kayttaja, alue, avaus) "
-                + "VALUES (?, 'sekalainen', ? )");
+                + "VALUES (?, ?, ? )");
         stmt.setString(1, kayttaja);
-        
-        stmt.setString(2, key);
+        stmt.setString(2, alue);
+        stmt.setString(3, key);
         stmt.execute();
         c.close();
     }
