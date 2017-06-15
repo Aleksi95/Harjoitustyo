@@ -47,13 +47,13 @@ public class Database {
         lista.add("CREATE TABLE Kayttaja (id INTEGER PRIMARY KEY, nimi varchar(15));");
         
         lista.add("CREATE TABLE Keskustelun_avaus (keskust_avaus_id INTEGER PRIMARY KEY, "
-                + "kayttaja INTEGER ,avaus VARCHAR(200),timestamp TIMESTAMP,alue varchar(20) NOT NULL, "
+                + "kayttaja INTEGER ,avaus VARCHAR(200),timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,alue varchar(20) NOT NULL, "
                 + "FOREIGN KEY (kayttaja) REFERENCES Kayttaja(id),"
                 + "FOREIGN KEY (alue) REFERENCES Alue(nimi));");
         
         lista.add("CREATE TABLE Vastaus (vastaus_id INTEGER PRIMARY KEY, "
                 + "kayttaja INTEGER, vastaus VARCHAR(200),"
-                + "timestamp TIMESTAMP,alue VARCHAR(20),keskust_avaus INTEGER NOT NULL,"
+                + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,alue VARCHAR(20),keskust_avaus INTEGER NOT NULL,"
                 + "FOREIGN KEY (keskust_avaus) REFERENCES Keskustelun_avaus(keskust_avaus_id),"
                 + "FOREIGN KEY (kayttaja) REFERENCES kayttaja(id),"
                 + "FOREIGN KEY (alue) REFERENCES alue(nimi));");

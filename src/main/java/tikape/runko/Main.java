@@ -13,7 +13,7 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta22.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta40.db");
         database.init();
 
         KayttajaDao kayttajaDao = new KayttajaDao(database);
@@ -23,9 +23,6 @@ public class Main {
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            if (req.queryParams().contains("content")) {
-                alueDao.lisaaAlue(req.queryParams("content"));
-            }
             map.put("alueet", alueDao.findAll());
 
             return new ModelAndView(map, "index");
