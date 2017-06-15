@@ -82,8 +82,8 @@ public class Database {
         lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(2, 1, 'Koira on kala', '2011-03-05 11:08:12', 'kalat', 3)");
         lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(3, 2, 'Ankka on kala', '2011-04-05 03:08:12', 'kalat', 3)");
         lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(4, 3, 'Kissa on kala', '2011-05-05 15:08:12', 'kalat', 3)");
-        lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus)"
-                + " VALUES(5, 4, 'Kissa on kala', '2018-02-05 09:08:12', 'sekalinen', 2)");
+        lista.add("INSERT INTO Vastaus (kayttaja, vastaus, alue, keskust_avaus)"
+                + " VALUES(4, 'Kissa on kala','sekalainen', 2)");
         
 
         return lista;
