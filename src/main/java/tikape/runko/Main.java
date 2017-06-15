@@ -30,6 +30,12 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        post("/", (req, res) -> {
+            alueDao.lisaaAlue(req.queryParams("alue"));
+            res.redirect("/");
+            return "ok";
+        });
 
         get("/:alue", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -38,6 +44,12 @@ public class Main {
 
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
+        
+        post("/:alue", (req, res) -> {
+            avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.queryParams("alue"), req.queryParams("avaus"));
+            res.redirect("/:alue");
+            return "ok";
+        });
 
         get("/:alue/:keskust_avaus", (req, res) -> {
             HashMap map = new HashMap<>();

@@ -76,12 +76,12 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
 
         return avaukset;
     }
-    
+
     @Override
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public List<Keskustelun_avaus> findLatest10(String key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT avaus AS avaus, ka.alue AS alue,"
@@ -89,8 +89,8 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
                 + "FROM Keskustelun_avaus ka LEFT JOIN Vastaus v "
                 + "ON  ka.keskust_avaus_id = v.keskust_avaus "
                 + "WHERE ka.alue = ? GROUP BY keskust_avaus_id ORDER BY ka.timestamp DESC LIMIT 10");
-        
-        stmt.setString(1,key);
+
+        stmt.setString(1, key);
 
         ResultSet rs = stmt.executeQuery();
         List<Keskustelun_avaus> avaukset = new ArrayList<>();
@@ -109,6 +109,17 @@ public class AvausDao implements Dao<Keskustelun_avaus, Integer> {
         connection.close();
 
         return avaukset;
+    }
+
+    public void lisaaAvaus(String kayttaja, String alue, String key) throws SQLException {
+        Connection c = database.getConnection();
+        PreparedStatement stmt = c.prepareStatement("INSERT INTO Keskustelun_avaus (kayttaja, alue, avaus) "
+                + "VALUES (?, 'sekalainen', ? )");
+        stmt.setString(1, kayttaja);
+        
+        stmt.setString(2, key);
+        stmt.execute();
+        c.close();
     }
 
 }
