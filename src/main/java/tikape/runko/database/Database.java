@@ -46,18 +46,16 @@ public class Database {
         
         lista.add("CREATE TABLE Kayttaja (id INTEGER PRIMARY KEY, nimi varchar(15));");
         
-        lista.add("CREATE TABLE Keskustelun_avaus (keskust_avaus_id INTEGER PRIMARY KEY, "
-                + "kayttaja INTEGER ,avaus VARCHAR(200),"
+        lista.add("CREATE TABLE Avaus (avaus_id INTEGER PRIMARY KEY, avaus VARCHAR(200),"
                 + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-                + "alue varchar(20) NOT NULL, "
-                + "FOREIGN KEY (kayttaja) REFERENCES Kayttaja(id),"
+                + "alue varchar(20) NOT NULL,"
                 + "FOREIGN KEY (alue) REFERENCES Alue(nimi));");
         
-        lista.add("CREATE TABLE Vastaus (vastaus_id INTEGER PRIMARY KEY, "
-                + "kayttaja INTEGER, vastaus VARCHAR(200),"
+        lista.add("CREATE TABLE Viesti(viesti_id INTEGER PRIMARY KEY, "
+                + "kayttaja INTEGER NOT NULL, viesti VARCHAR(200),"
                 + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-                + "alue VARCHAR(20),keskust_avaus INTEGER NOT NULL,"
-                + "FOREIGN KEY (keskust_avaus) REFERENCES Keskustelun_avaus(keskust_avaus_id),"
+                + "alue VARCHAR(20),avaus INTEGER NOT NULL,"
+                + "FOREIGN KEY (avaus) REFERENCES Avaus(avaus_id),"
                 + "FOREIGN KEY (kayttaja) REFERENCES kayttaja(id),"
                 + "FOREIGN KEY (alue) REFERENCES alue(nimi));");
         
@@ -74,19 +72,22 @@ public class Database {
         lista.add("INSERT INTO Alue (nimi) VALUES('koirat')");
         
         // Lisätään keskustelunavauksia
-        lista.add("INSERT INTO Keskustelun_avaus (keskust_avaus_id, kayttaja, avaus, timestamp, alue)"
-                + " VALUES(1, 1, 'Miksi', '2017-02-05 06:08:12', 'sekalainen')");
-        lista.add("INSERT INTO Keskustelun_avaus (keskust_avaus_id, kayttaja, avaus, timestamp, alue) VALUES(2, 2, 'Siksi', '2015-02-05 07:08:12', 'sekalainen')");
-        lista.add("INSERT INTO Keskustelun_avaus (keskust_avaus_id, kayttaja, avaus, timestamp, alue) VALUES(3, 3, 'Hauki kala', '2010-02-05 08:08:12', 'kalat')");
+        lista.add("INSERT INTO Avaus (avaus, alue)"
+                + " VALUES('Miksi', 'sekalainen')");
+        lista.add("INSERT INTO Avaus (avaus, alue) VALUES('Siksi', 'sekalainen')");
+        lista.add("INSERT INTO Avaus (avaus,alue) VALUES('Hauki kala','kalat')");
         
         //Lisätään vastauksia
-        lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus)"
-                + " VALUES(1, 4, 'Kissa on kala', '2011-02-05 09:08:12', 'kalat', 3)");
-        lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(2, 1, 'Koira on kala', '2011-03-05 11:08:12', 'kalat', 3)");
-        lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(3, 2, 'Ankka on kala', '2011-04-05 03:08:12', 'kalat', 3)");
-        lista.add("INSERT INTO Vastaus (vastaus_id, kayttaja, vastaus, timestamp, alue, keskust_avaus) VALUES(4, 3, 'Kissa on kala', '2011-05-05 15:08:12', 'kalat', 3)");
-        lista.add("INSERT INTO Vastaus (kayttaja, vastaus, alue, keskust_avaus)"
-                + " VALUES(4, 'Kissa on kala','sekalainen', 2)");
+        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
+                + " VALUES( 4, 'Kissa on kala','kalat', 3)");
+        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
+                + "VALUES(1, 'Koira on kala',  'kalat', 3)");
+        lista.add("INSERT INTO Viesti (kayttaja, viesti ,alue, avaus)"
+                + "VALUES( 2, 'Ankka on kala', 'kalat', 3)");
+        lista.add("INSERT INTO Viesti (kayttaja, viesti ,alue, avaus)"
+                + "VALUES( 3, 'Kissa on kala','kalat', 3)");
+        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
+                + " VALUES(4, 'Kissa on kala','sekalainen', 3)");
         
 
         return lista;

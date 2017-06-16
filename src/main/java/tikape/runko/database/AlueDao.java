@@ -46,10 +46,10 @@ public class AlueDao implements Dao<Alue, String>{
     public List<Alue> findAll() throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT alue.nimi as alue, "
-                + "Count(vastaus.vastaus_id) + Count(Distinct keskustelun_avaus.keskust_avaus_id) AS viesteja,"
-                + "MAX(vastaus.timestamp ) AS viimeisin " // Keskustelun avauksia ei huomioida
-                + "FROM Alue LEFT JOIN Keskustelun_avaus ON alue.nimi = Keskustelun_avaus.alue LEFT JOIN Vastaus ON  "
-                + "keskustelun_avaus.keskust_avaus_id = vastaus.keskust_avaus GROUP BY alue.nimi");
+                + "Count(viesti.viesti_id) AS viesteja,"
+                + "MAX(viesti.timestamp ) AS viimeisin "
+                + "FROM Alue LEFT JOIN Avaus ON alue.nimi = avaus.alue LEFT JOIN viesti ON  "
+                + "avaus.avaus_id = viesti.avaus GROUP BY alue.nimi");
 
         ResultSet rs = stmt.executeQuery();
         List<Alue> alueet = new ArrayList<>();
@@ -84,10 +84,10 @@ public class AlueDao implements Dao<Alue, String>{
         Connection connection = database.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (nimi) VALUES(?)");
-        
+       
         stmt.setString(1, key);
         stmt.execute();
-
+        
         connection.close();
         
     }

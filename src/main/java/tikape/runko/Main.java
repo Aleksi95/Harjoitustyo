@@ -13,13 +13,13 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta509.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta808.db");
         database.init();
 
-        KayttajaDao kayttajaDao = new KayttajaDao(database);
         AlueDao alueDao = new AlueDao(database);
         AvausDao avausDao = new AvausDao(database);
-        VastausDao vastausDao = new VastausDao(database);
+        ViestiDao viestiDao = new ViestiDao(database);
+        KayttajaDao kayttajaDao = new KayttajaDao(database);
 
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -45,25 +45,29 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         post("/:alue", (req, res) -> {
-            avausDao.lisaaAvaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("avaus"));
+            if (req.queryParams().contains("avaus")) {
+                avausDao.lisaaAvaus(req.queryParams("avaus"), req.params("alue"));
+            }
             res.redirect("/" + req.params("alue"));
             return "ok";
         });
 
-        get("/:alue/:keskust_avaus", (req, res) -> {
+        get("/:alue/:avaus", (req, res) -> {
             HashMap map = new HashMap<>();
 
-            map.put("vastaukset", vastausDao.findAllInThread(req.params("id")));
 
             map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
-            map.put("vastaukset", vastausDao.findAllInThread(req.params("keskust_avaus")));
+            map.put("viestit", viestiDao.findAllInThread(req.params("avaus")));
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
         
-        post("/:alue/:keskust_avaus", (req, res) -> {
-            vastausDao.lisaaVastaus(req.queryParams("kayttaja"), req.params("alue"), req.queryParams("vastaus"), req.params("keskust_avaus"));
-            res.redirect("/" + req.params("alue") + "/" + req.params("keskust_avaus"));
+        post("/:alue/:avaus", (req, res) -> {
+            viestiDao.lisaaViesti(req.queryParams("viesti"), 
+                    req.queryParams("kayttaja"), 
+                    req.params("alue"), 
+                    req.params("avaus"));
+            res.redirect("/" + req.params("alue") + "/" + req.params("avaus"));
             return "ok";     
         });
     }

@@ -2,23 +2,21 @@
 package tikape.runko.domain;
 
 
-public class Keskustelun_avaus {
+public class Avaus {
     private Integer id;
     private String alue;
-    private int kayttaja;
-    private String keskust_avaus;
+    private String avaus;
     private String timestamp;
     
-    public Keskustelun_avaus(Integer id, String alue, int kayttaja, String keskust_avaus, String timestamp){
+    public Avaus(Integer id, String alue, String avaus, String timestamp){
         this.id = id;
         this.alue = alue;
-        this.kayttaja = kayttaja;
-        this.keskust_avaus = keskust_avaus;
+        this.avaus = avaus;
         this.timestamp = timestamp; 
     }
     
     public String getAvaus(){
-        return " " + this.keskust_avaus;
+        return " " + this.avaus;
     }
     
     public Integer getId(){
