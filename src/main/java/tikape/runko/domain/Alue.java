@@ -10,7 +10,7 @@ public class Alue {
     
     public Alue(String nimi){
         this.nimi = nimi;
-        this.timestamp = "0000";
+        this.timestamp = "Ei viestejä";
         this.viesteja = 0;
         
         
