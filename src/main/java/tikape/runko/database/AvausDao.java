@@ -111,14 +111,54 @@ public class AvausDao implements Dao<Avaus, Integer> {
         return avaukset;
     }
 
-    public void lisaaAvaus(String avaus, String alue) throws SQLException {
-        Connection c = database.getConnection();
-        PreparedStatement stmt = c.prepareStatement("INSERT INTO Avaus (avaus, alue) "
-                + "VALUES (?, ?)");
-        stmt.setString(1, avaus);
-        stmt.setString(2, alue);
-        stmt.execute();
-        c.close();
+    public void lisaaAvaus(String avaus, String alue, String nimi, String viesti) throws SQLException {
+        Connection c = null;
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        PreparedStatement stmt3 = null;
+        try {
+            c = database.getConnection();
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("INSErT INTO Avaus(avaus, alue) "
+                    + "VALUES (?, ?);");
+            stmt.setString(1, avaus);
+            stmt.setString(2, alue);
+            stmt.executeUpdate();
+            stmt2 = c.prepareStatement("INSERT INTO Kayttaja(nimi) Values(?);");
+            stmt2.setString(1, nimi);
+            stmt2.executeUpdate();
+            stmt3 = c.prepareStatement("INSERT INTO Viesti(kayttaja, viesti, alue, avaus)"
+                    + "Values((SELECT MAX(id) FROM kayttaja), ?, ?, (SELECT MAX(avaus_id) FROM avaus));");
+            stmt3.setString(1, viesti);
+            stmt3.setString(2, alue);
+            stmt3.executeUpdate();
+
+            c.commit();
+            System.out.println("Done!");
+
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            c.rollback();
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (stmt2 != null) {
+                stmt2.close();
+            }
+            
+            if(stmt3 != null){
+                stmt3.close();
+            }
+
+            if (c != null) {
+                c.close();
+            }
+        }
+
     }
 
 }

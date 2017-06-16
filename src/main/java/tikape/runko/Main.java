@@ -46,8 +46,9 @@ public class Main {
 
         post("/:alue", (req, res) -> {
             if (req.queryParams().contains("avaus")) {
-                avausDao.lisaaAvaus(req.queryParams("avaus"), req.params("alue"));
+                avausDao.lisaaAvaus(req.queryParams("avaus"), req.params("alue"), req.queryParams("nimi"), req.queryParams("viesti"));
             }
+            
             res.redirect("/" + req.params("alue"));
             return "ok";
         });

@@ -119,19 +119,44 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     }
 
     public void lisaaViesti(String viesti, String nimi, String alue, String avaus) throws SQLException {
-        Connection c = database.getConnection();
-        PreparedStatement stmt = c.prepareStatement("BEGIN TRANSACTION; "
-                + "INSERT INTO Kayttaja(nimi) VALUES ( ? )"
-                + "SELECT id = SCOPE_IDENTITY()"
-                + "INSERT INTO Viesti(viesti, alue, avaus, kayttaja) VALUES (?, ?, ?, id)"
-                + "COMMIT;");
-        stmt.setString(1, nimi);
-        stmt.setString(2, viesti);
-        stmt.setString(3, alue);
-        stmt.setString(4, avaus);
-        stmt.execute();
-        
-        c.close();
+        Connection c = null;
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        try {
+            c = database.getConnection();
+            c.setAutoCommit(false);
+
+            stmt = c.prepareStatement("INSERT INTO Kayttaja(nimi) "
+                    + "VALUES (?);");
+            stmt.setString(1, nimi);
+            stmt.executeUpdate();
+            stmt2 = c.prepareStatement("INSERT INTO Viesti(kayttaja, viesti, alue, avaus)"
+                    + " Values((SELECT MAX(id) FROM kayttaja), ?, ?, ?);");
+            stmt2.setString(1, viesti);
+            stmt2.setString(2, alue);
+            stmt2.setString(3, avaus);
+            
+            stmt2.executeUpdate();
+
+            c.commit();
+            System.out.println("Done!");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            c.rollback();
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (stmt2 != null) {
+                stmt2.close();
+            }
+
+            if (c != null) {
+                c.close();
+            }
+        }
     }
 
 }
