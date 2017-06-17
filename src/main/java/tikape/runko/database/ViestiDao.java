@@ -118,7 +118,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return viestit;
     }
 
-    public void lisaaViesti(String viesti, String nimi, String alue, String avaus) throws SQLException {
+    public void lisaaViesti(String viesti, String nimi, String alue, int avaus) throws SQLException {
         Connection c = null;
         PreparedStatement stmt = null;
         PreparedStatement stmt2 = null;
@@ -134,7 +134,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
                     + " Values((SELECT MAX(id) FROM kayttaja), ?, ?, ?);");
             stmt2.setString(1, viesti);
             stmt2.setString(2, alue);
-            stmt2.setString(3, avaus);
+            stmt2.setInt(3, avaus);
             
             stmt2.executeUpdate();
 
