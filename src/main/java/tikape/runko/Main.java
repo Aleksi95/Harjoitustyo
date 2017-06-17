@@ -70,7 +70,7 @@ public class Main {
             HashMap map = new HashMap<>();
 
             map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.queryParams("avaus.avaus"));
-            map.put("viestit", viestiDao.findAllInThread(req.params("avaus")));
+            map.put("viestit", viestiDao.findAllInThread(Integer.parseInt(req.params("avaus"))));
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());

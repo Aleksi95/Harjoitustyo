@@ -88,7 +88,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public List<Viesti> findAllInThread(String key) throws SQLException {
+    public List<Viesti> findAllInThread(Integer key) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, v.timestamp, "
@@ -98,7 +98,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
                 + "WHERE v.avaus = ? ORDER BY v.timestamp");
 
-        stmt.setString(1, key);
+        stmt.setObject(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();
         while (rs.next()) {
