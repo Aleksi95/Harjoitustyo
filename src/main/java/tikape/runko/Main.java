@@ -80,7 +80,7 @@ public class Main {
                 viestiDao.lisaaViesti(req.queryParams("viesti"),
                         req.queryParams("kayttaja"),
                         req.params("alue"),
-                        req.params("avaus"));
+                        Integer.parseInt(req.params("avaus")));
             }
             res.redirect("/" + req.params("alue") + "/" + req.params("avaus"));
             return "ok";
