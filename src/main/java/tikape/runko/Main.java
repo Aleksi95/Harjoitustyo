@@ -57,7 +57,7 @@ public class Main {
             HashMap map = new HashMap<>();
 
 
-            map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
+            map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus.avaus"));
             map.put("viestit", viestiDao.findAllInThread(req.params("avaus")));
 
             return new ModelAndView(map, "opiskelija");
