@@ -60,21 +60,17 @@ public class Database {
     
     private List<String> postgreLauseet() {
          ArrayList<String> lista = new ArrayList<>();
-         lista.add("DROP TABLE Alue");
-         lista.add("DROP TABLE Kayttaja");
-         lista.add("DROP TABLE Avaus");
-         lista.add("DROP TABLE Viesti");
          
-         lista.add("CREATE TABLE Alue (nimi VARCHAR(20) PRIMARY KEY);");
+        lista.add("CREATE TABLE Alue (nimi VARCHAR(20) PRIMARY KEY);");
 
-        lista.add("CREATE TABLE Kayttaja (id INTEGER SERIAL PRIMARY KEY, nimi varchar(15));");
+        lista.add("CREATE TABLE Kayttaja (id SERIAL PRIMARY KEY, nimi varchar(15));");
 
-        lista.add("CREATE TABLE Avaus (avaus_id INTEGER SERIAL PRIMARY KEY, avaus VARCHAR(100),"
+        lista.add("CREATE TABLE Avaus (avaus_id SERIAL PRIMARY KEY, avaus VARCHAR(100),"
                 + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + "alue varchar(20) NOT NULL,"
                 + "FOREIGN KEY (alue) REFERENCES Alue(nimi));");
 
-        lista.add("CREATE TABLE Viesti(viesti_id INTEGER SERIAL PRIMARY KEY, "
+        lista.add("CREATE TABLE Viesti(viesti_id SERIAL PRIMARY KEY, "
                 + "kayttaja INTEGER NOT NULL, viesti VARCHAR(300),"
                 + "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + "alue VARCHAR(20),avaus INTEGER NOT NULL,"
