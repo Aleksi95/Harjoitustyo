@@ -13,7 +13,7 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Database database = new Database("jdbc:sqlite:metsapalasta808.db");
+        Database database = new Database("jdbc:sqlite:metsapalasta420.db");
         database.init();
 
         AlueDao alueDao = new AlueDao(database);
