@@ -78,7 +78,7 @@ public class Main {
         post("/:alue/:avaus", (req, res) -> {
             if (req.queryParams().contains("viesti")) {
                 String kayttaja = "anonyymi";
-                if (req.queryParams("kayttaja") != null) {
+                if (req.queryParams("kayttaja") != "") {
                     kayttaja = req.queryParams("kayttaja");
                 }
                 viestiDao.lisaaViesti(req.queryParams("viesti"),
