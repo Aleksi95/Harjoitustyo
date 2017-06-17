@@ -98,7 +98,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
                 + "WHERE v.avaus = ? ORDER BY v.timestamp");
 
-        stmt.setObject(1, key);
+        stmt.setString(1, key);
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();
         while (rs.next()) {
