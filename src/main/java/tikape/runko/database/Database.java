@@ -79,33 +79,17 @@ public class Database {
                 + "FOREIGN KEY (alue) REFERENCES alue(nimi));");
 
         //Lisätään käyttäjiä:
-        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES(1, 'Jonne')");
-        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES(2, 'Joni')");
-        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES(3, 'Jonna')");
-        lista.add("INSERT INTO Kayttaja (id,nimi) VALUES(4, 'Anni')");
+        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES('Jonne')");
+        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES('Joni')");
+        lista.add("INSERT INTO Kayttaja(id,nimi) VALUES('Jonna')");
+        lista.add("INSERT INTO Kayttaja (id,nimi) VALUES('Anni')");
 
         //Lisätään Alueita
         lista.add("INSERT INTO Alue(nimi) VALUES('sekalainen')");
         lista.add("INSERT INTO Alue (nimi) VALUES('kalat')");
         lista.add("INSERT INTO Alue (nimi) VALUES('koirat')");
 
-        // Lisätään keskustelunavauksia
-        lista.add("INSERT INTO Avaus (avaus, alue)"
-                + " VALUES('Miksi', 'sekalainen')");
-        lista.add("INSERT INTO Avaus (avaus, alue) VALUES('Siksi', 'sekalainen')");
-        lista.add("INSERT INTO Avaus (avaus,alue) VALUES('Hauki kala','kalat')");
-
-        //Lisätään vastauksia
-        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
-                + " VALUES( 4, 'Kissa on kala','kalat', 3)");
-        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
-                + "VALUES(1, 'Koira on kala',  'kalat', 3)");
-        lista.add("INSERT INTO Viesti (kayttaja, viesti ,alue, avaus)"
-                + "VALUES( 2, 'Ankka on kala', 'kalat', 3)");
-        lista.add("INSERT INTO Viesti (kayttaja, viesti ,alue, avaus)"
-                + "VALUES( 3, 'Kissa on kala','kalat', 3)");
-        lista.add("INSERT INTO Viesti (kayttaja, viesti,alue, avaus)"
-                + " VALUES(4, 'Kissa on kala','sekalainen', 3)");
+        
 
         return lista;
     }
