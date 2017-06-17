@@ -30,7 +30,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, v.timestamp, "
-                + "v.avaus, ka.avaus as avaus "
+                + "v.avaus"
                 + "FROM Viesti v LEFT JOIN Avaus ka "
                 + "ON v.avaus = ka.avaus_id"
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
@@ -43,7 +43,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         String alue = rs.getString("alue");
         String viesti = rs.getString("viesti");
         String timestamp = rs.getString("timestamp");
-        String avaus = rs.getString("avaus");
+        int avaus = rs.getInt("avaus");
         Viesti v = new Viesti(id, viesti, kayttaja, alue, timestamp, avaus);
 
         rs.close();
@@ -58,7 +58,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, v.timestamp, "
-                + "v.avaus, ka.avaus as avaus "
+                + "v.avaus"
                 + "FROM Viesti v LEFT JOIN Avaus ka "
                 + "ON v.avaus = ka.avaus_id"
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
@@ -72,7 +72,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             String alue = rs.getString("alue");
             String vastaus = rs.getString("vastaus");
             String timestamp = rs.getString("timestamp");
-            String avaus = rs.getString("avaus");
+            Integer avaus = rs.getInt("avaus");
             viestit.add(new Viesti(id, kayttaja, alue, vastaus, timestamp, avaus));
         }
 
