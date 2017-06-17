@@ -7,11 +7,11 @@ public class Viesti {
     private String viesti;
     private String kayttaja;
     private String alue;
-    private String avaus;
+    private int avaus;
     private String timestamp;
 
     
-    public Viesti (Integer id, String viesti, String kayttaja, String alue, String timestamp, String avaus){
+    public Viesti (Integer id, String viesti, String kayttaja, String alue, String timestamp, int avaus){
         this.id = id;
         this.viesti = viesti;
         this.kayttaja = kayttaja;
@@ -28,7 +28,7 @@ public class Viesti {
         return this.kayttaja;
     }
     
-    public String getAvaus(){
+    public int getAvaus(){
         return this.avaus;
     }
 
