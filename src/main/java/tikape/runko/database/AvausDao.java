@@ -40,11 +40,12 @@ public class AvausDao implements Dao<Avaus, Integer> {
         }
 
         int id = rs.getInt("avaus_id");
-        String alue = rs.getString("alue");
-        String avaus = rs.getString("avaus");
-        String timestamp = rs.getString("timestamp");
+            String alue = rs.getString("alue");
+            String avaus = rs.getString("avaus");
+            String timestamp = rs.getString("timestamp");
+            Integer viesteja = rs.getInt("viesteja");
 
-        Avaus ka = new Avaus(id, alue, avaus, timestamp);
+            Avaus ka = new Avaus(id, alue, avaus, timestamp, viesteja);
 
         rs.close();
         stmt.close();
@@ -65,8 +66,9 @@ public class AvausDao implements Dao<Avaus, Integer> {
             String alue = rs.getString("alue");
             String avaus = rs.getString("avaus");
             String timestamp = rs.getString("timestamp");
+            Integer viesteja = rs.getInt("viesteja");
 
-            avaukset.add(new Avaus(id, alue, avaus, timestamp));
+            avaukset.add(new Avaus(id, alue, avaus, timestamp, viesteja));
         }
 
         rs.close();
@@ -100,8 +102,9 @@ public class AvausDao implements Dao<Avaus, Integer> {
             String alue = rs.getString("alue");
             String avaus = rs.getString("avaus");
             String timestamp = rs.getString("timestamp");
+            Integer viesteja = rs.getInt("viesteja");
 
-            avaukset.add(new Avaus(id, alue, avaus, timestamp));
+            avaukset.add(new Avaus(id, alue, avaus, timestamp, viesteja));
         }
 
         rs.close();

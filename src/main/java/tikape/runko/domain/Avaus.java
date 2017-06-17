@@ -7,12 +7,14 @@ public class Avaus {
     private String alue;
     private String avaus;
     private String timestamp;
+    private int viesteja;
     
-    public Avaus(Integer id, String alue, String avaus, String timestamp){
+    public Avaus(Integer id, String alue, String avaus, String timestamp, int viesteja){
         this.id = id;
         this.alue = alue;
         this.avaus = avaus;
         this.timestamp = timestamp; 
+        this.viesteja = viesteja;
     }
     
     public String getAvaus(){
@@ -29,5 +31,9 @@ public class Avaus {
     
     public String getAlue(){
         return this.alue;
+    }
+    
+    public int getViesteja(){
+        return this.viesteja;
     }
 }

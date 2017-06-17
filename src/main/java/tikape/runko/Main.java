@@ -13,12 +13,14 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
         
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
         }
         
         Database database = new Database("jdbc:sqlite:metsapalasta808.db");
+
         database.init();
 
         AlueDao alueDao = new AlueDao(database);
@@ -50,10 +52,12 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         post("/:alue", (req, res) -> {
-            if (req.queryParams().contains("avaus")) {
-                avausDao.lisaaAvaus(req.queryParams("avaus"), req.params("alue"), req.queryParams("nimi"), req.queryParams("viesti"));
+            if (req.queryParams().contains("avaus") && req.queryParams().contains("nimi") 
+                    && req.queryParams().contains("viesti")) {
+                avausDao.lisaaAvaus(req.queryParams("avaus"), req.params("alue"),
+                        req.queryParams("nimi"), req.queryParams("viesti"));
             }
-            
+
             res.redirect("/" + req.params("alue"));
             return "ok";
         });
@@ -61,20 +65,21 @@ public class Main {
         get("/:alue/:avaus", (req, res) -> {
             HashMap map = new HashMap<>();
 
-
-            map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.params("avaus"));
+            map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.queryParams("avaus.avaus"));
             map.put("viestit", viestiDao.findAllInThread(req.params("avaus")));
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
-        
+
         post("/:alue/:avaus", (req, res) -> {
-            viestiDao.lisaaViesti(req.queryParams("viesti"), 
-                    req.queryParams("kayttaja"), 
-                    req.params("alue"), 
-                    req.params("avaus"));
+            if (req.queryParams().contains("viesti")) {
+                viestiDao.lisaaViesti(req.queryParams("viesti"),
+                        req.queryParams("kayttaja"),
+                        req.params("alue"),
+                        req.params("avaus"));
+            }
             res.redirect("/" + req.params("alue") + "/" + req.params("avaus"));
-            return "ok";     
+            return "ok";
         });
     }
 }
