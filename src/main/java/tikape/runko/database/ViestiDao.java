@@ -30,7 +30,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, "
-                + "v.timestamp AT TIME ZONE 'EETDST', "
+                + "v.timestamp + INTERVAL '3 hours', "
                 + "v.avaus FROM Viesti v "
                 + "LEFT JOIN Avaus ka ON v.avaus = ka.avaus_id "
                 + "LEFT JOIN Kayttaja k ON v.kayttaja = k.id "
@@ -58,7 +58,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, "
-                + "v.timestamp AT TIME ZONE 'EETDST' AS timestamp, "
+                + "v.timestamp + INTERVAL '3 hours' AS timestamp, "
                 + "v.avaus"
                 + "FROM Viesti v LEFT JOIN Avaus ka "
                 + "ON v.avaus = ka.avaus_id"
@@ -93,7 +93,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT v.viesti, "
                 + "v.viesti_id, k.nimi as kayttaja, v.alue, "
-                + "v.timestamp AT TIME ZONE 'EETDST' AS timestamp, "
+                + "v.timestamp + INTERVAL '3 hours'  AS timestamp, "
                 + "v.avaus "
                 + "FROM Viesti v LEFT JOIN Avaus ka "
                 + "ON v.avaus = ka.avaus_id "
