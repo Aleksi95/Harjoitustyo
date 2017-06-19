@@ -88,7 +88,7 @@ public class AvausDao implements Dao<Avaus, Integer> {
         PreparedStatement stmt = connection.prepareStatement("SELECT ka.avaus AS avaus, "
                 + "ka.alue AS alue,"
                 + "COUNT(v.viesti_id) AS viesteja,"
-                + "date(MAX(v.timestamp)) AS timestamp, avaus_id "
+                + "date(MAX(v.timestamp)+ INTERVAL '3 hours' ) AS timestamp, avaus_id "
                 + "FROM Avaus ka LEFT JOIN Viesti v "
                 + "ON  ka.avaus_id = v.avaus "
                 + "WHERE ka.alue = ? GROUP BY avaus_id ORDER BY timestamp DESC LIMIT 10");
