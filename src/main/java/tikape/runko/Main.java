@@ -52,7 +52,7 @@ public class Main {
             map.put("teksti", "Alue: " + req.params("alue"));
             map.put("avaukset", avausDao.findLatest10(req.params("alue")));
 
-            return new ModelAndView(map, "opiskelijat");
+            return new ModelAndView(map, "avaus");
         }, new ThymeleafTemplateEngine());
 
         post("/:alue", (req, res) -> {
@@ -72,7 +72,7 @@ public class Main {
             map.put("teksti", "Alue: " + req.params("alue") + " --> " + req.queryParams("avaus"));
             map.put("viestit", viestiDao.findAllInThread(Integer.parseInt(req.params("avaus"))));
 
-            return new ModelAndView(map, "opiskelija");
+            return new ModelAndView(map, "viesti");
         }, new ThymeleafTemplateEngine());
 
         post("/:alue/:avaus", (req, res) -> {
