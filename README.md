@@ -1,4 +1,6 @@
-# tikape-runko
+# Metsapalasta
 
-Tietokantojen perusteet -kurssilla tehtävän web-sovelluksen pohja.
+https://metsapalsta.herokuapp.com/ 
+
+Tietokantojen perusteet - kurssin harjoitustyö.
 
